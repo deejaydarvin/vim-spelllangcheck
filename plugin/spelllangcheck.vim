@@ -60,7 +60,7 @@ endfunction
 
 function! <SID>SetSpell()
     if &spell==1
-        if (line('$') > 20 && exists(s:old_lc))
+        if (line('$') > 20 && exists("s:old_lc"))
             if abs(line('$') - s:old_lc) > line('$') / 10
                 let sel = <SID>GuessSpelllang()
                 let &spelllang = g:spelllangcheck_list[sel]
@@ -69,7 +69,7 @@ function! <SID>SetSpell()
             endif
         else
             let wc=<SID>CountWords()
-            if s:old_wc
+            if exists("s:old_wc")
                 if abs (s:old_wc - wc) > wc / 10
                     let sel = <SID>GuessSpelllang()
                     let &spelllang = g:spelllangcheck_list[sel]
