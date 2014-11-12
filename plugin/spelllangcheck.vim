@@ -87,7 +87,7 @@ function! <SID>SetSpell()
 endfunction
 
  if !exists(":SetSpelllang")
-   command -nargs=0  SetSpelllang  :call <SID>SetSpell
+   command -nargs=0  SetSpelllang  :call <SID>SetSpell()
  endif
 
 " think we can have * if it is called in a filetype plugin
