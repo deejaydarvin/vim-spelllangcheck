@@ -2,7 +2,7 @@
 " Last Change:	August 2014
 " Maintainer:	Robert Künnemann <robert@kunnemann.de>
 " License:	VIM License
-" Configuration: populate the following list. In case the smallest amount of
+" Configuration: populate the following list. In case the smallest element of
 " let g:spelllangcheck_list = [ 'de', 'fr', 'en' ]
 " spelling mistake is ambiguous, the earliest in the list is chosen.
 
@@ -16,21 +16,21 @@ let g:spelllangcheck_list = [ 'de', 'fr', 'en' ]
 function! <SID>CountSpellingMistakes(lang)
     let &spelllang = a:lang
     let mycount=0
-    let wrapscan_state=&wrapscan
-    set nowrapscan
     mark `
     normal gg
-    let last_pos=getpos(".")
     while 1
-        normal ]S
-        if getpos(".")==last_pos 
+        " count spelling mistakes per line
+        " count how often until spellbadword returns the zerostring
+        while spellbadword() != ['','']
+            let mycount=mycount+1
+        if line("w$") == line(".")
             break
+        else
+            " go to next line
+            normal +
         endif
-        let mycount=mycount+1
-        let last_pos=getpos(".")
     endwhile
     normal ``
-    let &wrapscan=wrapscan_state
     return mycount
 endfunction
 
